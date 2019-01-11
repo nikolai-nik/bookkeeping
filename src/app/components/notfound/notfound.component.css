@@ -1,0 +1,26 @@
+.wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.not-found {
+    margin-top: 20%;
+}
+
+.far {
+    margin-top: 20%;
+    margin-right: 60px;
+    margin-left: 13px;
+}
+
+.fa-flushed {
+    font-size: 70px;
+    color: rgb(110, 76, 190);
+}
+
+.fa-meh-blank {
+    font-size: 70px;
+    color: rgb(212, 212, 44);
+}
