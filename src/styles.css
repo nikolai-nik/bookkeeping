@@ -1,5 +1,6 @@
-@import 'https://use.fontawesome.com/releases/v5.5.0/css/all.css';
-
+/* @import 'https://use.fontawesome.com/releases/v5.5.0/css/all.css'; */
+@import "~bootstrap/dist/css/bootstrap.css";
+@import '~@fortawesome/fontawesome-free/css/all.css';
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -30,7 +31,12 @@ h5,
 h6 {
   font-weight: 600;
 }
-
+.error-message {
+  color: red;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  font-size: 13px; 
+}
 .media-body h1 {
   font-weight: 300;
   margin-bottom: 20px;

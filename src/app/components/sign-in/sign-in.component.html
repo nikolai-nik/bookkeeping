@@ -9,32 +9,71 @@
 
     <div class="authBlock">
       <h3>Sign In</h3>
-      <div class="formGroup">
-        <input type="text" class="formControl" placeholder="Username" #userName required>
-      </div>
+      <form [formGroup]="loginForm">
+        <div class="form-group" >
+          <label for="exampleInputEmail1">Email address</label>
+          <input 
+            formControlName="userEmail" 
+            [ngClass]="getFormControlStateClasses('userEmail')"
+            type="email" 
+            class="form-control" 
+            id="exampleInputEmail1" 
+            aria-describedby="emailHelp" 
+            placeholder="Enter email" >
+        </div>
+        <ng-container 
+          *ngFor="let validation of validationMessage.userEmail">
+          <div
+            *ngIf="hasControlError('userEmail', null, validation.type)" class="error-message">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+        <div class="form-group" >
+          <label for="exampleInputPassword1">Password</label>
+          <input 
+            formControlName="password" 
+            [ngClass]="getFormControlStateClasses('password')"
+            type="password" 
+            class="form-control" 
+            id="exampleInputPassword1" 
+            placeholder="Password">
+        </div>
+        <ng-container 
+          *ngFor="let validation of validationMessage.password">
+          <div
+            *ngIf="hasControlError('password', null, validation.type)" class="error-message">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+        <button 
+          (click)="onSubmit()"
+          type="submit" 
+          class="btn btn-primary" >
+          Submit
+        </button>
+      </form>
 
       <div class="formGroup">
-        <input type="password" class="formControl" placeholder="Password" #userPassword required>
-      </div>
-
-      <!-- Calling SignIn Api from AuthService -->
-      <div class="formGroup">
-        <input type="button" class="btn btnPrimary" value="Log in" (click)="onSingIn(userName.value, userPassword.value)">
-      </div>
-
-      <div class="formGroup">
-        <span class="or"><span class="orInner">Or</span></span>
+        <span class="or">
+          <span class="orInner">Or</span>
+        </span>
       </div>
 
       <!-- Calling GoogleAuth Api from AuthService -->
       <div class="formGroup">
-        <button type="button" class="btn googleBtn" (click)="authService.GoogleAuth()">
+        <button 
+        (click)="authService.GoogleAuth()"
+          type="button" 
+          class="btn googleBtn">
           <i class="fab fa-google-plus-g"></i>
-          Log in with Google
+            Log in with Google
         </button>
       </div>
       <div class="formGroup">
-        <button type="button" class="btn googleBtn" (click)="authService.FacebookAuth()">
+        <button 
+          (click)="authService.FacebookAuth()"
+          type="button" 
+          class="btn googleBtn" >
           <i class="fab fa-facebook-square"></i>
           Log in with Facebook
         </button>
@@ -45,7 +84,9 @@
     </div>
 
     <div class="redirectToLogin">
-      <span>Don't have an account?<span class="redirect" routerLink="/register-user"> Sign Up</span></span>
+      <span>Don't have an account?
+        <span class="redirect" routerLink="/register-user"> Sign Up</span>
+      </span>
     </div>
 
   </div>
