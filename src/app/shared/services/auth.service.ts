@@ -1,23 +1,22 @@
 import { Injectable, NgZone } from '@angular/core';
 import { User } from "../services/user";
 import { auth } from 'firebase/app';
-import { AngularFireAuth } from "@angular/fire/auth";
+import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { Router } from "@angular/router";
-
+import { Router } from '@angular/router';
+import * as firebase from 'firebase';
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
-  userData: any; // Save logged in user data
-
+  public userData: any; // Save logged in user data
   constructor(
     public afs: AngularFirestore,   // Inject Firestore service
     public afAuth: AngularFireAuth, // Inject Firebase auth service
-    public router: Router,  
+    public router: Router,
     public ngZone: NgZone // NgZone service to remove outside scope warning
-  ) {    
+  ) {
     /* Saving user data in localstorage when 
     logged in and setting up null when logged out */
     this.afAuth.authState.subscribe(user => {
@@ -31,7 +30,9 @@ export class AuthService {
       }
     })
   }
-
+  credUserEmailPass(email, password) {
+    return firebase.auth.EmailAuthProvider.credential(email, password)
+  }
   // Sign in with email/password
   SignIn(email, password) {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password)
@@ -61,24 +62,25 @@ export class AuthService {
   // Send email verfificaiton when new user sign up
   SendVerificationMail() {
     return this.afAuth.auth.currentUser.sendEmailVerification()
-    .then(() => {
-      this.router.navigate(['verify-email-address']);
-    })
+      .then(() => {
+        this.router.navigate(['verify-email-address']);
+      })
   }
 
   // Reset Forggot password
   ForgotPassword(passwordResetEmail) {
     return this.afAuth.auth.sendPasswordResetEmail(passwordResetEmail)
-    .then(() => {
-      window.alert('Password reset email sent, check your inbox.');
-    }).catch((error) => {
-      window.alert(error)
-    })
+      .then(() => {
+        window.alert('Password reset email sent, check your inbox.');
+      }).catch((error) => {
+        window.alert(error)
+      })
   }
 
   // Returns true when user is looged in and email is verified
   get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('user'));
+    console.log(user)
     return (user !== null && user.emailVerified !== false) ? true : false;
   }
 
@@ -87,19 +89,73 @@ export class AuthService {
     return this.AuthLogin(new auth.GoogleAuthProvider());
   }
 
+
   // Auth logic to run auth providers
   AuthLogin(provider) {
     return this.afAuth.auth.signInWithPopup(provider)
-    .then((result) => {
-       this.ngZone.run(() => {
+      .then((result) => {
+        this.ngZone.run(() => {
           this.router.navigate(['dashboard']);
         })
-      this.SetUserData(result.user);
-    }).catch((error) => {
-      window.alert(error)
-    })
+        this.SetUserData(result.user);
+      }).catch((error) => {
+        window.alert(error)
+      })
   }
+  // Binding Google
+  BindingGoogle() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    this.afAuth.auth.currentUser.linkWithPopup(provider)
+      .then(function (result) {
+        // Accounts successfully linked.
+        var credential = result.credential;
+        var user = result.user;
+        console.log('success=>', user)
+        // ...
+      }).catch(function (error) {
+        // Handle Errors here.
+        // ...
+      });
+  }
+  BindingFacebook() {
+    const provider = new firebase.auth.FacebookAuthProvider();
+    this.afAuth.auth.currentUser.linkWithPopup(provider)
+      .then(function (result) {
+        // Accounts successfully linked.
+        var credential = result.credential;
+        var user = result.user;
+        console.log('success=>', user)
+        // ...
+      }).catch(function (error) {
+        // Handle Errors here.
+        // ...
+      });
+  }
+  //Facebook Auth 
+  FacebookAuth() {
+    const provider = new auth.FacebookAuthProvider();
 
+    return this.afAuth.auth.signInWithPopup(provider)
+      .then((result) => {
+        console.log("success=>", result)
+        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+        // const token = result.credential.accessToken;
+        // The signed-in user info.
+        this.SendVerificationMail();
+        if (result.user.emailVerified) {
+          this.ngZone.run(() => {
+            this.router.navigate(['dashboard']);
+            this.SetUserData(result.user);
+          })
+        }
+        
+        
+      }).catch(function (error) {
+        console.log("Error=>", error);
+
+      });
+
+  }
   /* Setting up user data when sign in with username/password, 
   sign up with username/password and sign in with social auth  
   provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */

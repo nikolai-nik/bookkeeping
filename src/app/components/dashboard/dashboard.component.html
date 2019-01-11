@@ -20,8 +20,20 @@
           </li>
           <!-- Calling SignOut() Api from AuthService -->
           <li class="nav-item">
-            <a class="nav-link" (click)="authService.SignOut()">
+            <a class="nav-link" (click)="onSingOuth()">
               <i class="fas fa-sign-out-alt"></i>Log out
+            </a>
+          </li>
+           <li class="nav-item">
+            <a class="nav-link" (click)="bindingGoogle()">
+              <i class="fab fa-google-plus-g"></i>
+              Вinding
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="bindingFacebook()">
+              <i class="fab fa-facebook-square"></i>
+              Вinding
             </a>
           </li>
         </ul>
