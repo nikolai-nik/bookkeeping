@@ -1,0 +1,14 @@
+
+.expenses-form {
+    margin-top: 50px;
+}
+
+.btn-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sbm-btn {
+    width: 100px;
+}

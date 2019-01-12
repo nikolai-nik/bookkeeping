@@ -1,3 +1,110 @@
-<p>
-  expenses works!
-</p>
+<div class="container">
+  <form 
+    [formGroup]="expForm"
+    class="expenses-form">
+    <div class="form-row">
+      <div class="col-md-12 col-lg-4">
+        <div class="form-group">
+          <label for="period">Period</label>
+          <input
+            [ngClass]="getFormControlStateClasses('period')"
+            formControlName="period" 
+            class="form-control" 
+            id="period" 
+            type="month">
+        </div>
+        <ng-container 
+        *ngFor="let validation of validationMessage.period">
+        <div
+          *ngIf="hasControlError('period', null, validation.type)" class="error-message">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+      </div> <!-- col-->
+      <div class="col-md-12 col-lg-4">
+        <div class="form-group">
+          <label for="date">Date</label>
+          <input
+            [ngClass]="getFormControlStateClasses('date')"
+            formControlName="date" 
+            class="form-control" 
+            id="date"
+            [value]="fullDate">
+        </div>
+        <ng-container 
+        *ngFor="let validation of validationMessage.date">
+        <div
+          *ngIf="hasControlError('date', null, validation.type)" class="error-message">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+      </div> <!-- col-->
+      <div class="col-md-12 col-lg-4">
+        <div class="form-group">
+          <label for="name">Name of payer</label>
+          <input
+            [ngClass]="getFormControlStateClasses('name')"
+            formControlName="name" 
+            class="form-control" 
+            id="name" 
+            type="text">
+        </div>
+        <ng-container 
+          *ngFor="let validation of validationMessage.name">
+          <div
+            *ngIf="hasControlError('name', null, validation.type)" class="error-message">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div> <!-- col-->
+    </div><!-- form-row-->
+    <div class="form-row">
+      <div class="col-sm-12 col-md-6">
+        <div class="form-group">
+          <label for="item">Name of item</label>
+          <input
+            [ngClass]="getFormControlStateClasses('item')"
+            formControlName="item" 
+            class="form-control" 
+            id="item" 
+            type="text">
+        </div>
+        <ng-container 
+        *ngFor="let validation of validationMessage.item">
+        <div
+          *ngIf="hasControlError('item', null, validation.type)" class="error-message">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+      </div> <!-- col-->
+      <div class="col-sm-12 col-md-6">
+        <div class="form-group">
+          <label for="ammount">Ammount in UAH</label>
+          <input
+            [ngClass]="getFormControlStateClasses('ammount')"
+            formControlName="ammount" 
+            class="form-control" 
+            id="ammount" 
+            type="text">
+        </div>
+        <ng-container 
+        *ngFor="let validation of validationMessage.ammount">
+        <div
+          *ngIf="hasControlError('ammount', null, validation.type)" class="error-message">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+      </div> <!-- col-->
+    </div><!-- form-row-->
+    <div class="form-row">
+      <div class="col btn-wrap">
+        <button 
+          type="submit" 
+          class="btn btn-primary sbm-btn"
+          (click)="onSubmit()">
+          Submit
+        </button>
+      </div>
+      </div>
+  </form>
+</div>

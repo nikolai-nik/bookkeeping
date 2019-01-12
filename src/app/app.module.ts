@@ -12,6 +12,7 @@ import { environment } from '../environments/environment';
 
 // Services
 import { AuthService } from "./shared/services/auth.service";
+import { SendService } from './shared/services/send.service';
 
 // Components
 import { AppComponent } from './app.component';
@@ -49,7 +50,10 @@ import { NotfoundComponent } from './components/notfound/notfound.component';
     AngularFirestoreModule,
     ReactiveFormsModule
   ],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    SendService
+  ],
   bootstrap: [AppComponent]
 })
 
