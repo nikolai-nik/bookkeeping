@@ -1,6 +1,10 @@
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+
+// Reactive Form
 import { ReactiveFormsModule } from "@angular/forms";
 import { AppRoutingModule } from './shared/routing/app-routing.module';
 
@@ -13,6 +17,18 @@ import { environment } from '../environments/environment';
 // Services
 import { AuthService } from "./shared/services/auth.service";
 import { SendService } from './shared/services/send.service';
+import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
+import { MainNavComponent } from './main-nav/main-nav.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import {
+  MatToolbarModule,
+  MatButtonModule,
+  MatIconModule,
+  MatListModule,
+  MatSidenavModule,
+  MatMenuModule
+} from '@angular/material';
+
 
 // Components
 import { AppComponent } from './app.component';
@@ -39,21 +55,38 @@ import { NotfoundComponent } from './components/notfound/notfound.component';
     IncomeComponent,
     SalariesComponent,
     ReportsComponent,
-    NotfoundComponent
+    NotfoundComponent,
+    NavMenuComponent,
+    MainNavComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
+    MatSidenavModule,
+    MatMenuModule,
+    MDBBootstrapModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatListModule,
+
+  ],
+  exports: [
+    MatMenuModule
   ],
   providers: [
     AuthService,
     SendService
   ],
+  schemas: [NO_ERRORS_SCHEMA],
+  
   bootstrap: [AppComponent]
 })
 

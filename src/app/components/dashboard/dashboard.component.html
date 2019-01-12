@@ -1,45 +1,7 @@
-<!-- Top navigation -->
-<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-  <a class="navbar-brand col-sm-3 col-md-2 mr-0" routerLink="/register-student">
-    <img class="brand-logo" src="assets/book-keeper.svg" alt="Logo">
-    <span class="dasboard-text">Dashboard</span>
-  </a>
-</nav>
 <!-- Sidebar navigation -->
 <div class="container-fluid">
-  <div class="row">
-    <nav class="col-md-2 d-md-block bg-light sidebar">
-      <div class="sidebar-sticky">
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <a class="nav-link active">
-              <i class="fas fa-user"></i>User Profile
-            </a>
-          </li>
-          <!-- Calling SignOut() Api from AuthService -->
-          <li class="nav-item">
-            <a class="nav-link" (click)="onSingOuth()">
-              <i class="fas fa-sign-out-alt"></i>Log out
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" (click)="bindingGoogle()">
-              <i class="fab fa-google-plus-g"></i>
-              Вinding
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" (click)="bindingFacebook()">
-              <i class="fab fa-facebook-square"></i>
-              Вinding
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-
     <!-- Main content -->
-    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <main role="main" >
       <div class="inner-adjust">
 
         <div class="pt-3 pb-2 mb-3 border-bottom">
@@ -56,7 +18,6 @@
                 <p>User ID: <strong>{{user.uid}}</strong></p>
                 <p>Email: <strong>{{user.email}}</strong></p>
                 <p>Email Verified: <strong>{{user.emailVerified}}</strong></p>
-                <button type="button" class="btn btn-primary">Primary</button>
               </div>
             </div>
           </div>
@@ -65,4 +26,3 @@
       </div>
     </main>
   </div>
-</div>

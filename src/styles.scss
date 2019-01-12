@@ -1,6 +1,7 @@
 /* @import 'https://use.fontawesome.com/releases/v5.5.0/css/all.css'; */
 @import "~bootstrap/dist/css/bootstrap.css";
 @import '~@fortawesome/fontawesome-free/css/all.css';
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -305,8 +306,8 @@ a:not([href]):not([tabindex]):hover {
 }
 
 .dasboard-text {
-  border-left: 1px solid rgb(255, 255, 255, .3);
-  color: rgb(255, 255, 255, .5);
+  border-left: 1px solid rgba(255, 255, 255, .3);
+  color: rgba(255, 255, 255, .5);
   display: inline-block;
   padding: 0 0 0 14px;
   font-size: 15px;
