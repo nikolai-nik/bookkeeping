@@ -5,7 +5,7 @@ import { validation_messages } from '../../shared/validation-message/validation-
 @Component({
   selector: 'app-expenses',
   templateUrl: './expenses.component.html',
-  styleUrls: ['./expenses.component.css']
+  styleUrls: ['./expenses.component.scss']
 })
 export class ExpensesComponent implements OnInit {
 

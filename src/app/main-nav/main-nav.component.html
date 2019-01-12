@@ -1,6 +1,7 @@
 <mat-sidenav-container class="sidenav-container" [hasBackdrop]="true">
   <mat-sidenav 
       #sidenav
+      #drawer
       class="sidenav" 
       fixedInViewport="true"
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
@@ -10,20 +11,33 @@
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
      
-      <a mat-list-item href="#" class="nav-link active" (click)="onSingOuth()">
-         <i class="fas fa-sign-out-alt"></i>Log out
+      <a mat-list-item class="nav-link" (click)="drawer.close()" routerLink="/dashboard/expenses"> 
+        <i class="fas fa-angle-double-down"></i>
+              Expenses
       </a>
-      <a mat-list-item href="#" class="nav-link" (click)="BindingGoogle()"> 
-        <i class="fab fa-google-plus-g"></i>
-              Вinding
+      <a mat-list-item class="nav-link" (click)="drawer.close()" routerLink="/dashboard/income"> 
+        <i class="fas fa-dollar-sign"></i>
+              Income
       </a>
-      <a mat-list-item href="#" (click)="bindingFacebook()"> 
-        <i class="fab fa-google-plus-g"></i>
-              Вinding
+      <a mat-list-item class="nav-link" (click)="drawer.close()" routerLink="/dashboard/salaries"> 
+        <i class="fas fa-money-bill-alt"></i>
+              Salaries
       </a>
-      <a mat-list-item href="#" (click)="onReports()"> 
+      <a mat-list-item class="nav-link" (click)="drawer.close()" routerLink="/dashboard/reports"> 
         <i class="fas fa-file-alt"></i>
               Reports
+      </a>
+      <a mat-list-item class="nav-link" (click)="onSingOuth()">
+         <i class="fas fa-sign-out-alt"></i>
+              Log out
+      </a>
+      <a mat-list-item class="nav-link" (click)="BindingGoogle()"> 
+        <i class="fab fa-google-plus-g"></i>
+              Вinding
+      </a>
+      <a mat-list-item (click)="bindingFacebook()"> 
+        <i class="fab fa-facebook-f"></i>
+              Вinding
       </a>
 
     </mat-nav-list>
@@ -34,6 +48,7 @@
         type="button"
         aria-label="Toggle sidenav"
         mat-icon-button
+        class="menu-btn"
         (click)="sidenav.toggle()">
          <i class="fas fa-bars"></i>
       </button>
