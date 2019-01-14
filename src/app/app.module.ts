@@ -12,6 +12,7 @@ import { AppRoutingModule } from './shared/routing/app-routing.module';
 import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireDatabase } from '@angular/fire/database';
 import { environment } from '../environments/environment';
 
 // Services
@@ -42,6 +43,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
+import { SuccessAlertComponent } from './shared/components/success-alert/success-alert.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +59,8 @@ import { NotfoundComponent } from './components/notfound/notfound.component';
     ReportsComponent,
     NotfoundComponent,
     NavMenuComponent,
-    MainNavComponent
+    MainNavComponent,
+    SuccessAlertComponent
   ],
   imports: [
     BrowserModule,
@@ -83,10 +86,11 @@ import { NotfoundComponent } from './components/notfound/notfound.component';
   ],
   providers: [
     AuthService,
-    SendService
+    SendService,
+    AngularFireDatabase
   ],
   schemas: [NO_ERRORS_SCHEMA],
-  
+
   bootstrap: [AppComponent]
 })
 

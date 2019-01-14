@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
+import { AngularFireDatabase } from '@angular/fire/database';
 
+@Injectable()
 export class SendService {
-    constructor() { }
+    constructor(private af: AngularFireDatabase) { }
+    public SendToDatabase(data) {
+        return this.af.list('sections').push(data)
+    }
 
-    
 }
