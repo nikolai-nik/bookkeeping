@@ -1,11 +1,13 @@
+
+
+
 <mat-sidenav-container class="sidenav-container" [hasBackdrop]="true">
   <mat-sidenav 
-      #sidenav
+     
       #drawer
       class="sidenav" 
       fixedInViewport="true"
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      
       opened="false"
       mode="over">
     <mat-toolbar>Menu</mat-toolbar>
@@ -27,33 +29,56 @@
         <i class="fas fa-file-alt"></i>
               Reports
       </a>
-      <a mat-list-item class="nav-link" (click)="onSingOuth()">
-         <i class="fas fa-sign-out-alt"></i>
-              Log out
-      </a>
-      <a mat-list-item class="nav-link" (click)="BindingGoogle()"> 
-        <i class="fab fa-google-plus-g"></i>
-              Вinding
-      </a>
-      <a mat-list-item (click)="bindingFacebook()"> 
-        <i class="fab fa-facebook-f"></i>
-              Вinding
-      </a>
-
+     
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
       <button
+        (click)="drawer.toggle()"
         type="button"
         aria-label="Toggle sidenav"
         mat-icon-button
-        class="menu-btn"
-        (click)="sidenav.toggle()">
+        class="menu-btn">
          <i class="fas fa-bars"></i>
       </button>
-      <span>Bookkeeping</span>
+     
+      
+      <mat-menu #appMenu="matMenu">
+        <div class="dropdovn-main-menu">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link" (click)="onSingOuth()">
+                <i class="fas fa-sign-out-alt"></i>Log out
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" (click)="BindingGoogle()">
+                <i class="fab fa-google-plus-g"></i>
+                Вinding
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" (click)="bindingFacebook()">
+                <i class="fab fa-facebook"></i>
+                Вinding
+              </a>
+            </li>
+          </ul>
+        </div>
+      </mat-menu>
+      <ng-container *ngIf="authService.userData as user">
+         <img 
+         [matMenuTriggerFor]="appMenu"
+          class="user-avatar" 
+          src="{{(user.photoURL) ? user.photoURL : '/assets/dummy-user.png'}}"
+          alt="{{user.displayName}}">
+      </ng-container>
+      
+
     </mat-toolbar>
     <!-- Add Content Here -->
+    
   </mat-sidenav-content>
+   
 </mat-sidenav-container>

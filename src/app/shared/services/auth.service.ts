@@ -146,7 +146,9 @@ export class AuthService {
           this.ngZone.run(() => {
             this.router.navigate(['dashboard/expenses']);
             this.SetUserData(result.user);
+
           })
+          this.SetUserData(result.user);
         }
         
         
