@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { validation_messages } from '../../shared/validation-message/validation-message';
+import { SendService } from 'src/app/shared/services/send.service';
 
 @Component({
   selector: 'app-expenses',
@@ -11,12 +13,18 @@ export class ExpensesComponent implements OnInit {
 
   public validationMessage: any;
   public expForm: FormGroup;
-  public fullDate: string
-
-  constructor() {
-    const date = new Date();
+  public fullDate: string;
+  public date: any;
+  public uid: string;
+  public alert: boolean;
+  constructor(
+    private sendService: SendService,
+    private afAuth: AngularFireAuth
+  ) {
+    this.date = new Date();
     this.validationMessage = validation_messages;
-    this.fullDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+    this.fullDate =
+      `${this.date.getDate()}/${this.date.getMonth() + 1}/${this.date.getFullYear()}`;
     this.expForm = new FormGroup({
       period: new FormControl(null, Validators.required),
       date: new FormControl(this.fullDate, Validators.required),
@@ -29,13 +37,37 @@ export class ExpensesComponent implements OnInit {
     })
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.afAuth.user.subscribe(res => this.uid = res.uid);
+  }
 
   public onSubmit() {
     if (!this.expForm.valid) {
       this.markAsDirty(this.expForm);
       return
     }
+    const data = {
+      period: this.expForm.get('period').value,
+      uid: this.uid,
+      section: 'expenses',
+      data: {
+        date: this.expForm.get('date').value,
+        name: this.expForm.get('name').value,
+        item: this.expForm.get('item').value,
+        ammount: this.expForm.get('ammount').value,
+      },
+    };
+    this.sendService.SendToDatabase(data)
+      .then(() => {
+        setTimeout(() => {
+          this.expForm.reset();
+          this.alert = true;
+          this.expForm.controls.date.setValue(this.fullDate);
+        }, 1000)
+        setTimeout(() => {
+          this.alert = false;
+        }, 5000)
+      })
   }
 
   public hasControlError(group: string, control: string, error: string) {
@@ -60,6 +92,7 @@ export class ExpensesComponent implements OnInit {
       : this.expForm.get(group).get(control);
     return this.getControlStateClasses(formControl);
   }
+
   public getControlStateClasses(control) {
     return {
       'is-valid': control.dirty && control.valid,
