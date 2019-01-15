@@ -3,6 +3,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { validation_messages } from '../../shared/validation-message/validation-message';
 import { SendService } from 'src/app/shared/services/send.service';
+import { MatDialog } from '@angular/material';
+import { SuccessAlertComponent } from 'src/app/shared/components/success-alert/success-alert.component';
 
 
 @Component({
@@ -17,12 +19,12 @@ export class SalariesComponent implements OnInit {
   public fullDate: string;
   public date: any;
   public uid: string;
-  public alert: boolean;
   public totalUSD: number;
   public totalUAH: number;
   constructor(
     private sendService: SendService,
-    private afAuth: AngularFireAuth
+    private afAuth: AngularFireAuth,
+    private dialog: MatDialog
   ) {
     this.date = new Date();
     this.validationMessage = validation_messages;
@@ -70,14 +72,20 @@ export class SalariesComponent implements OnInit {
     };
     this.sendService.SendToDatabase('salaries',data)
       .then(() => {
+        const dialogRef = this.dialog.open(SuccessAlertComponent, {
+          width: '250px',
+          height: '200px'
+        });
         setTimeout(() => {
           this.expForm.reset();
-          this.alert = true;
+          dialogRef.afterClosed().subscribe();
           this.expForm.controls.date.setValue(this.fullDate);
+          this.totalUSD = 0;
+          this.totalUAH = 0;
         }, 1000)
         setTimeout(() => {
-          this.alert = false;
-        }, 5000)
+          dialogRef.close();
+        }, 3000)
       })
   }
 
