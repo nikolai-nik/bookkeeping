@@ -29,8 +29,19 @@ export const validation_messages = {
         {type: 'required', message: 'Ammount is required'},
         {type: 'pattern', message: 'Numbers only'}
     ],
-
     
+    'project' : [
+        {type: 'required', message: 'Project is required'}
+    ],
+
+    'exrate' : [
+        {type: 'required', message: 'Exchange rate is required'}
+    ],
+
+    'prate' : [
+        {type: 'required', message: 'Pay rate rate is required'}
+    ],
+
 
 
 
