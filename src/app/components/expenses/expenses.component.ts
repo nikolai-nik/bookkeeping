@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { MatDialog } from '@angular/material';
 import { validation_messages } from '../../shared/validation-message/validation-message';
 import { SendService } from 'src/app/shared/services/send.service';
+import { SuccessAlertComponent } from 'src/app/shared/components/success-alert/success-alert.component';
 
 @Component({
   selector: 'app-expenses',
@@ -16,10 +18,10 @@ export class ExpensesComponent implements OnInit {
   public fullDate: string;
   public date: any;
   public uid: string;
-  public alert: boolean;
   constructor(
     private sendService: SendService,
-    private afAuth: AngularFireAuth
+    private afAuth: AngularFireAuth,
+    private dialog: MatDialog
   ) {
     this.date = new Date();
     this.validationMessage = validation_messages;
@@ -30,10 +32,7 @@ export class ExpensesComponent implements OnInit {
       date: new FormControl(this.fullDate, Validators.required),
       name: new FormControl(null, Validators.required),
       item: new FormControl(null, Validators.required),
-      ammount: new FormControl(null, [
-        Validators.required,
-        Validators.pattern(/^\d+$/)
-      ])
+      ammount: new FormControl(null, Validators.required)
     })
   }
 
@@ -57,16 +56,20 @@ export class ExpensesComponent implements OnInit {
         ammount: this.expForm.get('ammount').value,
       },
     };
-    this.sendService.SendToDatabase('expenses',data)
+    this.sendService.SendToDatabase('expenses', data)
       .then(() => {
+        const dialogRef = this.dialog.open(SuccessAlertComponent, {
+          width: '250px',
+          height: '200px'
+        });
         setTimeout(() => {
           this.expForm.reset();
-          this.alert = true;
+          dialogRef.afterClosed().subscribe();
           this.expForm.controls.date.setValue(this.fullDate);
         }, 1000)
         setTimeout(() => {
-          this.alert = false;
-        }, 5000)
+          dialogRef.close();
+        }, 3000)
       })
   }
 
