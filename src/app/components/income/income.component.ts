@@ -126,6 +126,7 @@ export class IncomeComponent implements OnInit {
         });
         setTimeout(() => {
           this.incForm.reset();
+          this.totalUAH = 0
           dialogRef.afterClosed().subscribe();
           this.incForm.controls.date.setValue(this.fullDate);
         }, 1000)
