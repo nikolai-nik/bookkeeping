@@ -1,3 +1,160 @@
-<p>
-  salaries works!
-</p>
+<div class="container">
+  <form 
+    [formGroup]="expForm"
+    class="expenses-form">
+    <div class="form-row">
+      <div class="col-md-12 col-lg-4">
+        <div class="form-group">
+          <label for="period">Period</label>
+          <input
+            [ngClass]="getFormControlStateClasses('period')"
+            formControlName="period" 
+            class="form-control" 
+            id="period" 
+            type="month">
+        </div>
+        <ng-container 
+        *ngFor="let validation of validationMessage.period">
+        <div
+          *ngIf="hasControlError('period', null, validation.type)" class="error-message">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+      </div> <!-- col-->
+      <div class="col-md-12 col-lg-4">
+        <div class="form-group">
+          <label for="date">Date</label>
+          <input
+            [ngClass]="getFormControlStateClasses('date')"
+            formControlName="date" 
+            class="form-control" 
+            id="date"
+            [value]="fullDate">
+        </div>
+        <ng-container 
+        *ngFor="let validation of validationMessage.date">
+        <div
+          *ngIf="hasControlError('date', null, validation.type)" class="error-message">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+      </div> <!-- col-->
+      <div class="col-md-12 col-lg-4">
+        <div class="form-group">
+          <label for="name">Name of payer</label>
+          <select class="select-name" formControlName="name">
+            <option value="Ivan">Ivan</option>
+            <option value="Igor">Igor</option>
+            <option value="Denis">Denis</option>
+            <option value="Slavik">Slavik</option>
+            <option value="Nikolay">Nikolay</option>
+            <option value="Evheniy">Evheniy</option>
+          </select>
+        </div>
+        <ng-container 
+          *ngFor="let validation of validationMessage.name">
+          <div
+            *ngIf="hasControlError('name', null, validation.type)" class="error-message">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+        <app-success-alert *ngIf="alert"></app-success-alert>
+      </div> <!-- col-->
+    </div><!-- form-row-->
+    <div class="form-row">
+      <div class="col-sm-12 col-md-4">
+        <div class="form-group">
+          <label for="item">Project</label>
+          <input
+            [ngClass]="getFormControlStateClasses('project')"
+            formControlName="project" 
+            class="form-control" 
+            id="item" 
+            type="text">
+        </div>
+        <ng-container 
+        *ngFor="let validation of validationMessage.project">
+        <div
+          *ngIf="hasControlError('project', null, validation.type)" class="error-message">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+      </div> <!-- col-->
+      <div class="col-sm-12 col-md-4">
+        <div class="form-group">
+          <label for="exrate">Exchange rate in USD</label>
+          <input
+            [ngClass]="getFormControlStateClasses('exrate')"
+            formControlName="exrate" 
+            class="form-control" 
+            id="exrate" 
+            type="text">
+        </div>
+        <ng-container 
+        *ngFor="let validation of validationMessage.exrate">
+        <div
+          *ngIf="hasControlError('exrate', null, validation.type)" class="error-message">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+      </div> <!-- col-->
+      <div class="col-sm-12 col-md-4">
+        <div class="form-group">
+          <label for="prate">Pay rate in USD</label>
+          <input
+            [ngClass]="getFormControlStateClasses('prate')"
+            formControlName="prate" 
+            class="form-control" 
+            id="prate" 
+            type="text">
+        </div>
+        <ng-container 
+        *ngFor="let validation of validationMessage.prate">
+        <div
+          *ngIf="hasControlError('prate', null, validation.type)" class="error-message">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+      </div> <!-- col-->
+    </div><!-- form-row-->
+    <div class="form-row">
+      <div class="col-sm-12 col-md-4">
+        <div class="form-group">
+          <label for="bonus">Bonus</label>
+          <input
+            [ngClass]="getFormControlStateClasses('bonus')"
+            formControlName="bonus" 
+            class="form-control" 
+            id="bonus" 
+            type="text">
+        </div>
+        <ng-container 
+        *ngFor="let validation of validationMessage.bonus">
+        <div
+          *ngIf="hasControlError('bonus', null, validation.type)" class="error-message">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+      <div class="form-group">
+        <label for="total">Pay rate in USD</label>
+        <input
+          [ngClass]="getFormControlStateClasses('prate')"
+          formControlName="prate" 
+          class="form-control" 
+          id="prate" 
+          type="text">
+      </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col btn-wrap">
+        <button 
+          type="submit" 
+          class="btn btn-primary sbm-btn"
+          (click)="onSubmit()">
+          Submit
+        </button>
+      </div>
+      </div>
+  </form>
+</div>
