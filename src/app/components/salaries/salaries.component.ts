@@ -33,18 +33,18 @@ export class SalariesComponent implements OnInit {
       date: new FormControl(this.fullDate, Validators.required),
       name: new FormControl(null, Validators.required),
       project: new FormControl(null, Validators.required),
-      exrate: new FormControl(null, Validators.required),
-      prate: new FormControl(null, Validators.required),
+      exchangeRate: new FormControl(null, Validators.required),
+      payRate: new FormControl(null, Validators.required),
       bonus: new FormControl(0)
     });
     this.totalUSD = 0;
     this.totalUAH = 0;
     this.expForm.valueChanges.subscribe(value => {
-      if (value.prate != null) {
-        this.totalUSD = Number(value.prate) + Number(value.bonus);
+      if (value.payRate != null) {
+        this.totalUSD = Number(value.payRate) + Number(value.bonus);
       }
-      if (this.totalUSD !== 0 && value.exrate != null) {
-        this.totalUAH = this.totalUSD * value.exrate;
+      if (this.totalUSD !== 0 && value.exchangeRate != null) {
+        this.totalUAH = this.totalUSD * value.exchangeRate;
       }
     })
   }
@@ -61,12 +61,11 @@ export class SalariesComponent implements OnInit {
     const data = {
       period: this.expForm.get('period').value,
       uid: this.uid,
-      section: 'expenses',
+      section: 'salaries',
       data: {
-        date: this.expForm.get('date').value,
-        name: this.expForm.get('name').value,
-        item: this.expForm.get('item').value,
-        ammount: this.expForm.get('ammount').value,
+       ...this.expForm.value,
+       totalUSD: this.totalUSD,
+       totalUAH: this.totalUAH
       },
     };
     this.sendService.SendToDatabase('salaries',data)

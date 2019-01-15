@@ -86,36 +86,36 @@
       </div> <!-- col-->
       <div class="col-sm-12 col-md-4">
         <div class="form-group">
-          <label for="exrate">Exchange rate in USD</label>
+          <label for="exchangeRate">Exchange rate in USD</label>
           <input
-            [ngClass]="getFormControlStateClasses('exrate')"
-            formControlName="exrate" 
+            [ngClass]="getFormControlStateClasses('exchangeRate')"
+            formControlName="exchangeRate" 
             class="form-control" 
-            id="exrate" 
+            id="exchangeRate" 
             type="number">
         </div>
         <ng-container 
-        *ngFor="let validation of validationMessage.exrate">
+        *ngFor="let validation of validationMessage.exchangeRate">
         <div
-          *ngIf="hasControlError('exrate', null, validation.type)" class="error-message">
+          *ngIf="hasControlError('exchangeRate', null, validation.type)" class="error-message">
           {{ validation.message }}
         </div>
       </ng-container>
       </div> <!-- col-->
       <div class="col-sm-12 col-md-4">
         <div class="form-group">
-          <label for="prate">Pay rate in USD</label>
+          <label for="payRate">Pay rate in USD</label>
           <input
-            [ngClass]="getFormControlStateClasses('prate')"
-            formControlName="prate" 
+            [ngClass]="getFormControlStateClasses('payRate')"
+            formControlName="payRate" 
             class="form-control" 
-            id="prate" 
+            id="payRate" 
             type="number">
         </div>
         <ng-container 
-        *ngFor="let validation of validationMessage.prate">
+        *ngFor="let validation of validationMessage.payRate">
         <div
-          *ngIf="hasControlError('prate', null, validation.type)" class="error-message">
+          *ngIf="hasControlError('payRate', null, validation.type)" class="error-message">
           {{ validation.message }}
         </div>
       </ng-container>
