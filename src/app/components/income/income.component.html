@@ -1,3 +1,327 @@
-<p>
-  income works!
-</p>
+<div class="container">
+  <form 
+    [formGroup]="incForm"
+    class="expenses-form">
+    <div class="form-row">
+
+      <div class="col-md-12 col-lg-6">
+        <div class="form-group">
+          <label for="period">Period</label>
+          <input
+            [ngClass]="getFormControlStateClasses('period')"
+            formControlName="period" 
+            class="form-control" 
+            id="period" 
+            type="month">
+        </div>
+        <ng-container 
+        *ngFor="let validation of validationMessage.period">
+        <div
+          *ngIf="hasControlError('period', null, validation.type)" class="error-message">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+      </div> <!-- col-->
+
+      <div class="col-md-12 col-lg-6">
+        <div class="form-group">
+          <label for="date">Date</label>
+          <input
+            [ngClass]="getFormControlStateClasses('date')"
+            formControlName="date" 
+            class="form-control" 
+            id="date"
+            [value]="fullDate">
+        </div>
+        <ng-container 
+        *ngFor="let validation of validationMessage.date">
+        <div
+          *ngIf="hasControlError('date', null, validation.type)" class="error-message">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+      </div> <!-- col-->
+      
+      <div class="col-md-12 col-lg-6">
+        <div class="form-group">
+          <label for="nameProject">Project Name</label>
+          <input
+            [ngClass]="getFormControlStateClasses('nameProject')"
+            formControlName="nameProject" 
+            class="form-control" 
+            id="nameProject" 
+            type="text">
+        </div>
+        <ng-container 
+          *ngFor="let validation of validationMessage.nameProject">
+          <div
+            *ngIf="hasControlError('nameProject', null, validation.type)" class="error-message">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div> <!-- col-->
+      
+       <div class="col-md-12 col-lg-6">
+        <div class="form-group">
+            <label  for="name">Name</label>
+            <select 
+              formControlName="name"
+              [ngClass]="getFormControlStateClasses('name')"
+              class="custom-select"
+              id="name">
+              <option value="Nikolai">Nikolai</option>
+              <option value="Slavic">Slavic</option>
+              <option value="Denis">Denis</option>
+            </select>
+        </div>
+        <ng-container 
+          *ngFor="let validation of validationMessage.name">
+          <div
+            *ngIf="hasControlError('name', null, validation.type)" class="error-message">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div> <!-- col-->
+
+    </div><!-- form-row-->
+    <div class="form-row">
+      <div class="col-sm-12 col-md-6">
+        <div class="form-group">
+          <label for="exchangeRate">Exchange rate</label>
+          <input
+            [ngClass]="getFormControlStateClasses('exchangeRate')"
+            formControlName="exchangeRate" 
+            class="form-control" 
+            id="exchangeRate" 
+            type="number">
+        </div>
+        <ng-container 
+        *ngFor="let validation of validationMessage.exchangeRate">
+        <div
+          *ngIf="hasControlError('exchangeRate', null, validation.type)" class="error-message">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+      </div> <!-- col-->
+
+      <div class="col-sm-12 col-md-6">
+        <div class="form-group">
+         <label for="incomeUSD">Revenue in US dollars</label>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span
+              [ngClass]="getFormControlStateClasses('incomeUSD')" 
+              class="input-group-text">$</span>
+            </div>
+          <input
+            [ngClass]="getFormControlStateClasses('incomeUSD')"
+            formControlName="incomeUSD" 
+            class="form-control" 
+            id="incomeUSD" 
+            type="number">
+          </div>
+        </div>
+        <ng-container 
+        *ngFor="let validation of validationMessage.incomeUSD">
+        <div
+          *ngIf="hasControlError('incomeUSD', null, validation.type)" class="error-message">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+      </div> <!-- col-->
+
+      <div class="col-sm-12 col-md-6">
+        <div class="form-group">
+          <label for="bankFees">Upwork / bank fees</label>
+          <input
+            [ngClass]="getFormControlStateClasses('bankFees')"
+            formControlName="bankFees" 
+            class="form-control" 
+            id="bankFees" 
+            type="number">
+        </div>
+        <ng-container 
+        *ngFor="let validation of validationMessage.bankFees">
+        <div
+          *ngIf="hasControlError('bankFees', null, validation.type)" class="error-message">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+      </div> <!-- col-->
+
+      <div class="col-sm-12 col-md-6">
+        <div class="form-group">
+          <label for="paymentUpwork">Payment of Upwork services</label>
+          <div class="input-group mb-3">
+            <div 
+              *ngIf="incForm.value.paymentUpworkSelect === 'custom'"
+              class="input-group-prepend">
+              <input
+                formControlName="paymentUpwork"
+                [ngClass]="getFormControlStateClasses('paymentUpwork')"
+                class="form-control custom-input-border" 
+                id="paymentUpwork" 
+                type="number">
+            </div>
+            <div 
+              *ngIf="incForm.value.paymentUpworkSelect !== 'custom'"
+              class="input-group-prepend">
+              <span 
+                [ngClass]="getFormControlStateClasses('paymentUpworkSelect')"
+                class="input-group-text">
+                  %
+                </span>
+            </div>
+            <select 
+              formControlName="paymentUpworkSelect"
+              [ngClass]="getFormControlStateClasses('paymentUpworkSelect')"
+              class="custom-select"
+              id="taxesSelect">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="custom">Custom</option>
+                
+            </select>
+          </div>
+        </div>
+        <ng-container 
+          *ngFor="let validation of (incForm.value.paymentUpworkSelect === 'custom') ? validationMessage.paymentUpwork : validationMessage.paymentUpworkSelect">
+          <div
+            *ngIf="hasControlError((incForm.value.paymentUpworkSelect === 'custom') ? 'paymentUpwork' : 'paymentUpworkSelect', null, validation.type)" class="error-message">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div> <!-- col-->
+
+    </div><!-- form-row-->
+     <div class="form-row">
+      <div class="col-sm-12 col-md-6">
+        <div class="form-group">
+          <label for="cashing">Total revenue in US dollars</label>
+          <div class="total-revenu">
+            {{totalUSD}}
+          </div>
+        </div>
+        
+
+      </div> <!-- col-->
+       <div class="col-sm-12 col-md-6">
+        <div class="form-group">
+          <label for="taxesSelect">Revenue UAH</label>
+          <div class="total-revenu">
+            {{resultUAH}}
+          </div>
+        </div>
+       
+      </div> <!-- col-->
+    </div><!-- form-row-->
+
+    <div class="form-row">
+      <div class="col-sm-12 col-md-6">
+        <div class="form-group">
+          <label for="cashing">Cashing</label>
+          <div class="input-group mb-3">
+            <div 
+              *ngIf="incForm.value.cashingSelect === 'custom'"
+              class="input-group-prepend">
+              <input
+                [ngClass]="getFormControlStateClasses('cashing')"
+                formControlName="cashing" 
+                class="form-control custom-input-border" 
+                id="cashing" 
+                type="number">
+            </div>
+            <select 
+              formControlName="cashingSelect"
+              [ngClass]="getFormControlStateClasses('cashingSelect')"
+              class="custom-select"
+              id="cashingSelect">
+                <option value="0.008" selected>0.008</option>
+                <option value="custom">Custom</option>
+                
+            </select>
+          </div>
+        </div>
+        <ng-container 
+          *ngFor="let validation of (incForm.value.cashingSelect === 'custom') ? validationMessage.cashing : validationMessage.cashingSelect">
+          <div
+            *ngIf="hasControlError((incForm.value.cashingSelect === 'custom') ? 'cashing' : 'cashingSelect', null, validation.type)" 
+            class="error-message">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+        
+
+      </div> <!-- col-->
+       <div class="col-sm-12 col-md-6">
+        <div class="form-group">
+         <label for="taxesSelect">Taxes</label>
+          <div class="input-group mb-3">
+            <div 
+              *ngIf="incForm.value.taxesSelect === 'custom'"
+              class="input-group-prepend">
+              <input
+                [ngClass]="getFormControlStateClasses('taxes')"
+                formControlName="taxes" 
+                class="form-control custom-input-border" 
+                id="taxes" 
+                type="number">
+            </div>
+            <div 
+              *ngIf="incForm.value.taxesSelect !== 'custom'"
+              class="input-group-prepend">
+              <span 
+                [ngClass]="getFormControlStateClasses('taxesSelect')"
+                class="input-group-text">
+                %
+              </span>
+            </div>
+            <select 
+              formControlName="taxesSelect"
+              [ngClass]="getFormControlStateClasses('taxesSelect')"
+              class="custom-select"
+              id="taxesSelect">
+                <option value="5">5</option>
+                <option value="32">32</option>
+                <option value="custom">Custom</option>
+                
+            </select>
+          </div>
+        </div>
+       
+        <ng-container 
+          *ngFor="let validation of (incForm.value.taxesSelect === 'custom') ? validationMessage.taxes : validationMessage.taxesSelect">
+          <div
+            *ngIf="hasControlError((incForm.value.taxesSelect === 'custom') ? 'taxes' : 'taxesSelect', null, validation.type)" 
+            class="error-message">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+       
+      </div> <!-- col-->
+    </div><!-- form-row-->
+
+    <div class="form-row">
+      <div class="col-sm-12 col-md-6">
+        <div class="form-group">
+          <label for="cashing">Total income UAH</label>
+          <div class="total-revenu">
+            {{totalUAH}}
+          </div>
+        </div>
+      </div>  
+    </div><!-- form-row-->
+
+    <div class="form-row">
+      <div class="col btn-wrap">
+        <button 
+          type="submit" 
+          class="btn btn-primary sbm-btn"
+          (click)="onSubmit()">
+          Submit
+        </button>
+      </div>
+      </div>
+  </form>
+</div>

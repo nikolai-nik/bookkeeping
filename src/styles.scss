@@ -1,3 +1,4 @@
+@import './app/theme/_theme.scss';
 @import "~bootstrap/scss/bootstrap.scss";
 @import '~@fortawesome/fontawesome-free/css/all.css';
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
@@ -74,7 +75,7 @@ h6 {
   display: table;
   width: 100%;
   height: 100%;
-  background: #3F51B5;
+  background: $primary;
 }
 
 .displayTableCell {
@@ -250,14 +251,7 @@ a:not([href]):not([tabindex]):hover {
   padding-top: 48px;
 }
 
-.form-control:focus {
-  border-color: #00BCD4;
-  box-shadow: none;
-}
 
-.form-control {
-  font-size: 14px;
-}
 
 i {
   width: 22px;
@@ -285,8 +279,11 @@ i {
 }
 .sidenav-container {
   height: 100%;
+ 
 }
-
+.mat-toolbar.mat-primary {
+  background: $primary;
+}
 .sidenav {
   width: 200px;
   box-shadow: 3px 0 6px rgba(0,0,0,0.24);
@@ -325,10 +322,23 @@ label {
   font-weight: 500;
 }
 
-.form-control {
-  padding: 1.375rem .75rem;
+.form-control:focus {
+  border-color: #00BCD4;
+  box-shadow: none;
 }
 
+.form-control {
+  font-size: 14px;
+  height: 3rem;
+}
+.input-group-text.is-invalid {
+  border: 1px solid ;
+  border-color: $danger;
+}
+.input-group-text.is-valid {
+  border: 1px solid ;
+  border-color: $primary;
+}
 /* Misc */
 .fa-sign-out-alt {
   position: relative;
@@ -338,4 +348,28 @@ label {
 .rounded-circle {
   max-width: 150px;
 }
-
+/* Popup */
+.cdk-overlay-dark-backdrop {
+    background: rgba(0,0,0,0.05);
+}
+.mat-dialog-container {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    overflow: auto;
+    overflow-x: auto;
+    overflow-y: auto;
+    outline: 0;
+    width: 100%;
+    height: 100%;
+    min-height: inherit;
+    max-height: inherit;
+    box-shadow: none;
+    border: 2px solid $primary;
+}
+// .cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
+//     opacity:0.1;
+// }
