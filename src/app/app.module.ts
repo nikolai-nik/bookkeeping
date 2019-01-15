@@ -10,7 +10,7 @@ import {
   MatSidenavModule,
   MatMenuModule
 } from '@angular/material';
-
+import {MatDialogModule} from '@angular/material/dialog';
 // Firebase services + enviorment module
 import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
@@ -77,11 +77,13 @@ import { SuccessAlertComponent } from './shared/components/success-alert/success
     MatButtonModule,
     MatIconModule,
     MatListModule,
-
+    MatDialogModule
   ],
   exports: [
-    MatMenuModule
+    MatMenuModule,
+    SuccessAlertComponent
   ],
+  entryComponents: [SuccessAlertComponent],
   providers: [
     AuthService,
     SendService,

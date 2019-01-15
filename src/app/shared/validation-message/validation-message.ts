@@ -33,8 +33,8 @@ export const validation_messages = {
         { type: 'required', message: 'Name project is required' }
         
     ],
-    'exchenchRate': [
-        { type: 'required', message: 'Exchench Rate is required' }  ,
+    'exchangeRate': [
+        { type: 'required', message: 'Exchange Rate is required' }  ,
         { type: 'pattern', message: 'Numbers only' }
     ],
     'incomeUSD': [
