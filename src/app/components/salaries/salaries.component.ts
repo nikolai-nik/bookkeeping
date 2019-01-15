@@ -69,7 +69,7 @@ export class SalariesComponent implements OnInit {
         ammount: this.expForm.get('ammount').value,
       },
     };
-    this.sendService.SendToDatabase(data)
+    this.sendService.SendToDatabase('salaries',data)
       .then(() => {
         setTimeout(() => {
           this.expForm.reset();

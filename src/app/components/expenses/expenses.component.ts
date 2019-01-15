@@ -57,7 +57,7 @@ export class ExpensesComponent implements OnInit {
         ammount: this.expForm.get('ammount').value,
       },
     };
-    this.sendService.SendToDatabase(data)
+    this.sendService.SendToDatabase('expenses',data)
       .then(() => {
         setTimeout(() => {
           this.expForm.reset();
