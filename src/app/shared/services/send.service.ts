@@ -15,7 +15,7 @@ export class SendService {
    
   }
 
-  public getSectionDate(section: string) {
+  public getSectionData(section: string) {
   
      return this.af.list(`sections/${section}`).snapshotChanges().pipe(
         map(changes =>

@@ -16,6 +16,9 @@ export class IncomeComponent implements OnInit {
   public validationMessage: any;
   public incForm: FormGroup;
   public fullDate: string;
+  public procentSumUpwork: number;
+  public procentSumCashing: number;
+  public procentSumTaxes: number;
   public totalUSD: number;
   public resultUAH: number;
   public totalUAH: number;
@@ -30,7 +33,6 @@ export class IncomeComponent implements OnInit {
     const date = new Date();
     this.validationMessage = validation_messages;
     this.fullDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
-  
 
     this.incForm = new FormGroup({
       period: new FormControl(null, Validators.required),
@@ -48,13 +50,15 @@ export class IncomeComponent implements OnInit {
       taxesSelect: new FormControl(null, Validators.required),
 
     })
+    this.procentSumUpwork = null;
+    this.procentSumCashing = null;
+    this.procentSumTaxes = null;
     this.totalUSD = null;
     this.resultUAH = null;
     this.totalUAH = null;
 
     this.incForm.valueChanges.subscribe(value => {
       this.resultForm = value;
-      console.log(value)
       //getting the result total revenue USD and UA
       if (this.resultForm.paymentUpworkSelect === 'custom') {
 
@@ -62,11 +66,12 @@ export class IncomeComponent implements OnInit {
         const resUpwork = resBank - this.resultForm.paymentUpwork;
         this.totalUSD = Math.round(resUpwork * 100) / 100;
         this.resultUAH = Math.round((this.resultForm.exchangeRate * this.totalUSD) * 100) / 100;
-        
+
       } else if (this.resultForm.paymentUpworkSelect !== 'custom') {
 
         const resBank = this.resultForm.incomeUSD - this.resultForm.bankFees;
-        let procentSum = resBank / 100 * this.resultForm.paymentUpworkSelect;
+        const procentSum = resBank / 100 * this.resultForm.paymentUpworkSelect;
+        this.procentSumUpwork = Math.round(procentSum * 100) / 100;
         this.totalUSD = Math.round((resBank - procentSum) * 100) / 100;
         this.resultUAH = Math.round((this.resultForm.exchangeRate * this.totalUSD) * 100) / 100;
       }
@@ -78,7 +83,8 @@ export class IncomeComponent implements OnInit {
 
       } else if (this.resultForm.cashingSelect !== 'custom' && this.resultUAH) {
 
-        let procentSum = this.resultUAH / 100 * this.resultForm.cashingSelect;
+        const procentSum = this.resultUAH / 100 * this.resultForm.cashingSelect;
+        this.procentSumCashing = Math.round(procentSum * 100) / 100;
         this.totalUAH = Math.round((this.resultUAH - procentSum) * 100) / 100;
       }
 
@@ -89,8 +95,9 @@ export class IncomeComponent implements OnInit {
 
       } else if ((this.resultForm.taxesSelect !== 'custom' && this.resultUAH)) {
 
-        let procentSum = this.totalUAH / 100 * this.resultForm.taxesSelect;
-        this.totalUAH = Math.round((this.totalUAH - procentSum) * 100) / 100;
+        const procentSum = this.totalUAH / 100 * this.resultForm.taxesSelect;
+        this.procentSumTaxes = Math.round(procentSum * 100) / 100;
+        this.totalUAH = Math.round((this.totalUAH - this.procentSumTaxes) * 100) / 100;
 
       }
     });
@@ -105,13 +112,23 @@ export class IncomeComponent implements OnInit {
       this.markAsDirty(this.incForm);
       return
     }
-
     const data = {
       period: this.incForm.get('period').value,
       uid: this.uid,
       section: 'income',
       data: {
-        ...this.incForm.value,
+        date: this.incForm.value.date,
+        name: this.incForm.value.name,
+        nameProject: this.incForm.value.nameProject,
+        exchangeRate: this.incForm.value.exchangeRate,
+        incomeUSD: this.incForm.value.incomeUSD,
+        bankFees: this.incForm.value.bankFees,
+        paymentUpwork: (this.incForm.value.paymentUpworkSelect === 'custom') ? this.incForm.value.paymentUpwork : this.procentSumUpwork,
+        paymentUpworkSelect: this.incForm.value.paymentUpworkSelect,
+        cashing: (this.incForm.value.cashingSelect === 'custom') ? this.incForm.value.cashing : this.procentSumCashing,
+        cashingSelect: this.incForm.value.cashingSelect,
+        taxes: (this.incForm.value.taxesSelect === 'custom') ? this.incForm.value.taxes : this.procentSumTaxes,
+        taxesSelect:  this.incForm.value.taxesSelect,
         totalUSD: this.totalUSD,
         resultUAH: this.resultUAH,
         totalUAH: this.totalUAH
@@ -135,8 +152,6 @@ export class IncomeComponent implements OnInit {
         }, 3000)
       })
   }
-
-
 
   public hasControlError(group: string, control: string, error: string) {
     const formControl = control == null
