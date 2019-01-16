@@ -5,3 +5,12 @@
 .my-input {
     width: 100%;
 }
+
+table, td, th {
+  border: 1px solid #ccc;
+}
+
+#table1 {
+  border-collapse: collapse;
+  border-color: blue;
+}

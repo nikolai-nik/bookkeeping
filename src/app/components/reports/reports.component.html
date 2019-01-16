@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="container">
   <form 
   class="repo-form"
@@ -16,3 +17,46 @@
     </div><!-- form-row-->
   </form>
 </div>
+=======
+
+
+<table id="table1">
+   <tr>
+    <th>Date</th>
+    <th>Name</th>
+    <th>Project</th>
+    <th>Income USD</th>
+    <th>Upwork/bank fees</th>
+    <th> Upwork Service fee</th>
+    <th>Total income USD</th>
+    <th>Income UAH</th>
+    <th>Cashing</th>
+    <th>Taxes</th>
+    <th>TOTAL Income UAH</th>
+   </tr>
+   <tr *ngFor="let item of resIncomeAll">
+    <td>{{item.data.period}}</td>
+    <td>{{item.data.name}}</td>
+    <td>{{item.data.nameProject}}</td>
+    <td>{{item.data.incomeUSD}}<span>$</span></td>
+    <td>{{item.data.bankFees}}<span>$</span></td>
+    <td>
+      <span *ngIf="item.data.paymentUpworkSelect === 'custom'">{{item.data.paymentUpwork}}<span>$</span></span>
+      <span *ngIf="item.data.paymentUpworkSelect !== 'custom'">{{item.data.paymentUpworkSelect}}<span>%</span></span>
+    </td>
+    <td>{{item.data.totalUSD}}<span>$</span></td>
+    <td>{{item.data.resultUAH}}<span>грн.</span></td>
+    <td>
+      <span *ngIf="item.data.cashingSelect === 'custom'">{{item.data.cashing}}<span>грн.</span></span>
+      <span *ngIf="item.data.cashingSelect !== 'custom'">{{item.data.cashingSelect}}<span>%</span></span>
+    </td>
+    <td>
+      <span *ngIf="item.data.taxesSelect === 'custom'">{{item.data.taxes}}<span>грн.</span></span>
+      <span *ngIf="item.data.taxesSelect !== 'custom'">{{item.data.taxesSelect}}<span>%</span></span>
+    </td>
+    <td>{{item.data.totalUAH}}<span>грн.</span></td>
+   </tr>
+  </table>
+
+<button (click)="onClickFilter()">filter</button>
+>>>>>>> 4be6ffea5ac6876a06e7e878531f0242caff9201
