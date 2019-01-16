@@ -42,12 +42,14 @@
       <div class="col-md-12 col-lg-4">
         <div class="form-group">
           <label for="name">Name of payer</label>
-          <input
-            [ngClass]="getFormControlStateClasses('name')"
-            formControlName="name" 
-            class="form-control" 
-            id="name" 
-            type="text">
+          <select 
+          formControlName="name"
+          [ngClass]="getFormControlStateClasses('name')"
+          class="custom-select select-name"
+          id="name">
+          <option value="Igor">Igor</option>
+          <option value="Denis">Denis</option>
+        </select>
         </div>
         <ng-container 
           *ngFor="let validation of validationMessage.name">

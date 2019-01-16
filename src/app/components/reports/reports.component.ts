@@ -11,17 +11,30 @@ export class ReportsComponent {
   public reportsForm: FormGroup;
   public resultIncome: boolean;
 
-  public resIncomeAll: Array<object>;
-  public resSalariesAll: Array<object>;
-  public resExpensesAll: Array<object>;
+  public resIncomeAll: Array<any>;
+  public resSalariesAll: Array<any>;
+  public resExpensesAll: Array<any>;
 
   public filterResultIncome: any;
   public filterResultExpenses: any;
   public filterResultSalaries: any;
 
+  public totalIncome: number;
+  public totalCompanyExpenses: number;
+  public profit: string;
+
   constructor(private sendService: SendService) {
+    this.totalIncome = 0;
+    this.totalCompanyExpenses = 0;
+    this.profit = '0';
     this.reportsForm = new FormGroup({
       period: new FormControl(null, Validators.required)
+    })
+    this.reportsForm.valueChanges.subscribe(value => {
+      if (value.period != null) {
+        this.onClickFilter(value.period);
+        this.getProfit();
+      }
     })
     this.sendService.getSectionDate('income').subscribe((res) => {
       this.resIncomeAll = res;
@@ -34,8 +47,19 @@ export class ReportsComponent {
     })
   }
 
-  onClickFilter() {
-    const period = this.reportsForm.controls.period.value;
+  public getProfit() {
+    for (const key of this.filterResultIncome) {
+      this.totalIncome = this.totalIncome + key.data.totalUAH;
+    }
+
+    for (const key of this.filterResultSalaries) {
+      this.totalCompanyExpenses = this.totalCompanyExpenses + key.data.totalUAH;
+    }
+
+    this.profit = (this.totalIncome - this.totalCompanyExpenses).toFixed(2)
+  }
+
+  public onClickFilter(period) {
     const resultFilterIncome = this.resIncomeAll.filter((item: any): any => item.period === period);
     if (resultFilterIncome.length) {
       this.filterResultIncome = resultFilterIncome;
