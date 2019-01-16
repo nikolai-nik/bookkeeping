@@ -1,7 +1,46 @@
+<div class="container">
+  <form class="repo-form" [formGroup]="reportsForm">
+    <div class="form-row">
+      <div class="col-md-12 col-lg-6">
+        <div class="form-group">
+          <label for="period">Select period</label>
+          <input formControlName="period" class="form-control" id="period" type="month">
+        </div>
+      </div> <!-- col-->
+    </div><!-- form-row-->
+  </form>
+</div>
+<section *ngIf="filterResultExpenses">
+  <h2>Expenses</h2>
+  <table 
+  class="table-custom ">
+  <tr>
+    <th>Period</th>
+    <th>Date</th>
+    <th>Name</th>
+    <th>Item</th>
+    <th>Item</th>
+   </tr>
 
-
-<table id="table1">
-   <tr>
+  <tr *ngFor="let item of filterResultExpenses">
+    <td>{{item.period}}</td>
+    <td>{{item.data.date}}</td>
+    <td>{{item.data.name}}</td>
+    <td>{{item.data.item}}</td>
+    <td>{{item.data.ammount}}<span>грн.</span></td>
+  </tr>
+</table>
+</section>
+<div *ngIf="!filterResultExpenses && reportsForm.get('period').dirty"
+  class="alert alert-primary" 
+  role="alert">
+  A simple primary alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+</div>
+<section *ngIf="filterResultIncome">
+  <h2>Income</h2>
+<table 
+  class="table-custom">
+  <tr>
     <th>Date</th>
     <th>Name</th>
     <th>Project</th>
@@ -14,7 +53,8 @@
     <th>Taxes</th>
     <th>TOTAL Income UAH</th>
    </tr>
-   <tr *ngFor="let item of resIncomeAll">
+
+  <tr *ngFor="let item of filterResultIncome">
     <td>{{item.period}}</td>
     <td>{{item.data.name}}</td>
     <td>{{item.data.nameProject}}</td>
@@ -26,7 +66,46 @@
     <td><span>{{item.data.cashing}}<span>грн.</span></span></td>
     <td><span>{{item.data.taxes}}<span>грн.</span></span></td>
     <td>{{item.data.totalUAH}}<span>грн.</span></td>
-   </tr>
+  </tr>
+</table>
+</section>
+<div *ngIf="!filterResultIncome && reportsForm.get('period').dirty"
+  class="alert alert-primary" 
+  role="alert">
+  A simple primary alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+</div>
+<section *ngIf="filterResultSalaries">
+  <h2>Salaries</h2>
+  <table 
+    class="table-custom ">
+    <tr>
+      <th>Period</th>
+      <th>Date</th>
+      <th>Name</th>
+      <th>Project</th>
+      <th>Pay rate</th>
+      <th>Bonus</th>
+      <th>Total USD</th>
+      <th>Total UAH</th>
+    </tr>
+
+    <tr *ngFor="let item of filterResultSalaries">
+      <td>{{item.period}}</td>
+      <td>{{item.data.date}}</td>
+      <td>{{item.data.name}}</td>
+      <td>{{item.data.project}}</td>
+      <td>{{item.data.payRate}}<span>$</span></td>
+      <td>{{item.data.bonus}}<span>$</span></td>
+      <td>{{item.data.totalUSD}}<span>$</span></td>
+      <td>{{item.data.totalUAH}}<span>грн.</span></td>
+    </tr>
   </table>
+</section>
+<div *ngIf="!filterResultSalaries && reportsForm.get('period').dirty"
+  class="alert alert-primary" 
+  role="alert">
+  A simple primary alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+</div>
+
 
 <button (click)="onClickFilter()">filter</button>
