@@ -1,5 +1,5 @@
 .repo-form {
-    margin-top: 50px;
+    margin-top: 2rem;
 }
 
 .my-input {
@@ -10,7 +10,11 @@ table, td, th {
   border: 1px solid #ccc;
 }
 
-#table1 {
+.table-custom {
   border-collapse: collapse;
   border-color: blue;
+}
+
+.section {
+  margin-bottom: 2rem;
 }

@@ -21,11 +21,14 @@ export class ReportsComponent {
 
   public totalIncome: number;
   public totalCompanyExpenses: number;
+  public totalOfficeExpenses: number;
   public profit: string;
+  public profitEach: number;
 
   constructor(private sendService: SendService) {
     this.totalIncome = 0;
     this.totalCompanyExpenses = 0;
+    this.totalOfficeExpenses = 0;
     this.profit = '0';
     this.reportsForm = new FormGroup({
       period: new FormControl(null, Validators.required)
@@ -36,13 +39,19 @@ export class ReportsComponent {
         this.getProfit();
       }
     })
-    this.sendService.getSectionDate('income').subscribe((res) => {
+
+    this.filterResultIncome = null;
+    this.filterResultExpenses = null;
+    this.filterResultSalaries = null;
+
+    this.sendService.getSectionData('income').subscribe((res) => {
       this.resIncomeAll = res;
     })
-    this.sendService.getSectionDate('salaries').subscribe((res) => {
+    this.sendService.getSectionData('salaries').subscribe((res) => {
       this.resSalariesAll = res
+
     })
-    this.sendService.getSectionDate('expenses').subscribe((res) => {
+    this.sendService.getSectionData('expenses').subscribe((res) => {
       this.resExpensesAll = res
     })
   }
@@ -56,7 +65,13 @@ export class ReportsComponent {
       this.totalCompanyExpenses = this.totalCompanyExpenses + key.data.totalUAH;
     }
 
-    this.profit = (this.totalIncome - this.totalCompanyExpenses).toFixed(2)
+
+    for (const key of this.filterResultExpenses) {
+      this.totalOfficeExpenses = this.totalOfficeExpenses + key.data.ammount;
+    }
+  
+    this.profit = (this.totalIncome - this.totalCompanyExpenses).toFixed(2);
+    this.profitEach = Number(this.profit) / 2;
   }
 
   public onClickFilter(period) {
@@ -65,16 +80,18 @@ export class ReportsComponent {
       this.filterResultIncome = resultFilterIncome;
     }
     else {
-      this.filterResultIncome = [];
+      this.filterResultIncome = null;
       console.log('aaa')
     }
 
     const resultFilterExpenses = this.resExpensesAll.filter((item: any): any => item.period === period);
     if (resultFilterExpenses.length) {
       this.filterResultExpenses = resultFilterExpenses;
+      console.log('filterResultExpenses=>',this.filterResultExpenses);
+
     }
     else {
-      this.filterResultExpenses = [];
+      this.filterResultExpenses = null;
       console.log('empty')
     }
 
@@ -83,8 +100,9 @@ export class ReportsComponent {
       this.filterResultSalaries = resultFilterSalaries;
     }
     else {
-      this.filterResultSalaries = [];
+      this.filterResultSalaries = null;
       console.log('aaa')
     }
   }
+
 }

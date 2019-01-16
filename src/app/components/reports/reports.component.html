@@ -9,9 +9,43 @@
       </div> <!-- col-->
     </div><!-- form-row-->
   </form>
-</div>
 
-<table id="table1">
+<section 
+  *ngIf="filterResultExpenses"
+  class="section" >
+  <h2>Expenses</h2>
+  <table 
+  class="table-custom ">
+  <tr>
+    <th>Period</th>
+    <th>Date</th>
+    <th>Name</th>
+    <th>Item</th>
+    <th>Ammount</th>
+    <th>Total office expenses</th>
+   </tr>
+
+  <tr *ngFor="let item of filterResultExpenses">
+    <td>{{item.period}}</td>
+    <td>{{item.data.date}}</td>
+    <td>{{item.data.name}}</td>
+    <td>{{item.data.item}}</td>
+    <td>{{item.data.ammount}}<span>грн.</span></td>
+    <td>{{totalOfficeExpenses}}</td>
+  </tr>
+</table>
+</section>
+<div *ngIf="!filterResultExpenses && reportsForm.get('period').dirty"
+  class="alert alert-primary" 
+  role="alert">
+  A simple primary alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+</div>
+<section 
+  *ngIf="filterResultIncome"
+  class="section">
+  <h2>Income</h2>
+<table 
+  class="table-custom">
   <tr>
     <th>Date</th>
     <th>Name</th>
@@ -24,37 +58,84 @@
     <th>Cashing</th>
     <th>Taxes</th>
     <th>TOTAL Income UAH</th>
-  </tr>
+   </tr>
+
   <tr *ngFor="let item of filterResultIncome">
-    <td>{{item.data.period}}</td>
+    <td>{{item.period}}</td>
     <td>{{item.data.name}}</td>
     <td>{{item.data.nameProject}}</td>
     <td>{{item.data.incomeUSD}}<span>$</span></td>
     <td>{{item.data.bankFees}}<span>$</span></td>
-    <td>
-      <span *ngIf="item.data.paymentUpworkSelect === 'custom'">{{item.data.paymentUpwork}}<span>$</span></span>
-      <span *ngIf="item.data.paymentUpworkSelect !== 'custom'">{{item.data.paymentUpworkSelect}}<span>%</span></span>
-    </td>
+    <td><span>{{item.data.paymentUpwork}}<span>$</span></span></td>
     <td>{{item.data.totalUSD}}<span>$</span></td>
     <td>{{item.data.resultUAH}}<span>грн.</span></td>
-    <td>
-      <span *ngIf="item.data.cashingSelect === 'custom'">{{item.data.cashing}}<span>грн.</span></span>
-      <span *ngIf="item.data.cashingSelect !== 'custom'">{{item.data.cashingSelect}}<span>%</span></span>
-    </td>
-    <td>
-      <span *ngIf="item.data.taxesSelect === 'custom'">{{item.data.taxes}}<span>грн.</span></span>
-      <span *ngIf="item.data.taxesSelect !== 'custom'">{{item.data.taxesSelect}}<span>%</span></span>
-    </td>
+    <td><span>{{item.data.cashing}}<span>грн.</span></span></td>
+    <td><span>{{item.data.taxes}}<span>грн.</span></span></td>
     <td>{{item.data.totalUAH}}<span>грн.</span></td>
   </tr>
 </table>
-
-<div class="table4">
-  <div class="content">
-    <button (click)="getProfit()">Total</button>
-    Total company income: {{totalIncome}}
-    Total company expenses: {{totalCompanyExpenses}}
-    Profit: {{profit}} 
-  </div>
+</section>
+<div *ngIf="!filterResultIncome && reportsForm.get('period').dirty"
+  class="alert alert-primary" 
+  role="alert">
+  A simple primary alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
 </div>
-  
+<section 
+  *ngIf="filterResultSalaries"
+  class="section">
+  <h2>Salaries</h2>
+  <table 
+    class="table-custom ">
+    <tr>
+      <th>Period</th>
+      <th>Date</th>
+      <th>Name</th>
+      <th>Project</th>
+      <th>Pay rate</th>
+      <th>Bonus</th>
+      <th>Total USD</th>
+      <th>Total UAH</th>
+    </tr>
+
+    <tr *ngFor="let item of filterResultSalaries">
+      <td>{{item.period}}</td>
+      <td>{{item.data.date}}</td>
+      <td>{{item.data.name}}</td>
+      <td>{{item.data.project}}</td>
+      <td>{{item.data.payRate}}<span>$</span></td>
+      <td>{{item.data.bonus}}<span>$</span></td>
+      <td>{{item.data.totalUSD}}<span>$</span></td>
+      <td>{{item.data.totalUAH}}<span>грн.</span></td>
+    </tr>
+  </table>
+</section>
+<div *ngIf="!filterResultSalaries && reportsForm.get('period').dirty"
+  class="alert alert-primary" 
+  role="alert">
+  A simple primary alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+</div>
+
+<section 
+  *ngIf="filterResultSalaries"
+  class="section">
+  <h2>Profit</h2>
+  <table 
+    class="table-custom ">
+    <tr>
+      <th>Total company income</th>
+      <th>Total company expenses</th>
+      <th>Profit</th>
+      <th>Profit each</th>
+    </tr>
+
+    <tr>
+      <td>{{totalIncome}}</td>
+      <td>{{totalCompanyExpenses}}</td>
+      <td>{{profit}}</td>
+      <td>{{profitEach}}</td>
+    </tr>
+  </table>
+</section>
+
+
+</div> <!-- container-->

@@ -12,7 +12,8 @@ export class SendService {
     this.size$ = new BehaviorSubject(null);
   }
 
-  public getSectionDate(section: string) {
+
+  public getSectionData(section: string) {
     return this.af.list(`sections/${section}`).snapshotChanges().pipe(
       map(changes =>
         changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
