@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SendService } from 'src/app/shared/services/send.service';
 import { switchMap, map } from 'rxjs/operators';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
@@ -9,7 +10,11 @@ import { switchMap, map } from 'rxjs/operators';
 export class ReportsComponent implements OnInit {
   public reportSection: any;
   public resIncome: any;
+  public reportsForm: FormGroup
   constructor(private sendService: SendService) {
+    this.reportsForm = new FormGroup({
+      period: new FormControl(null, Validators.required)
+    })
     // this.reportSection = this.sendService.getToDatabase('income').subscribe((res) => {
     //   return res;
     // });

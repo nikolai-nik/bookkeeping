@@ -1,10 +1,18 @@
-
-<ul>
-    <li *ngFor="let item of resIncome">
-     <p>{{ item.data.period }}</p>
-     
-    </li>
-  </ul>
-
-
-<button (click)="onClickFilter()">filter</button>
+<div class="container">
+  <form 
+  class="repo-form"
+  [formGroup]="reportsForm">
+    <div class="form-row">
+      <div class="col-md-12 col-lg-6">
+        <div class="form-group">
+          <label for="period">Select period</label>
+          <input 
+            formControlName="period" 
+            class="form-control" 
+            id="period" 
+            type="month">
+        </div>
+      </div> <!-- col-->
+    </div><!-- form-row-->
+  </form>
+</div>
