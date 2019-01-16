@@ -1,50 +1,66 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { SendService } from 'src/app/shared/services/send.service';
-import { switchMap, map } from 'rxjs/operators';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
   styleUrls: ['./reports.component.scss']
 })
-export class ReportsComponent implements OnInit {
-  public reportSection: any;
-  public resIncome: any;
-  public reportsForm: FormGroup
+export class ReportsComponent {
+  public resIncome: object;
+  public reportsForm: FormGroup;
+  public resultIncome: boolean;
 
-  public resIncomeAll: any;
-  public resSalariesAll: any;
-  public resExpensesAll: any;
+  public resIncomeAll: Array<object>;
+  public resSalariesAll: Array<object>;
+  public resExpensesAll: Array<object>;
+
+  public filterResultIncome: any;
+  public filterResultExpenses: any;
+  public filterResultSalaries: any;
+
   constructor(private sendService: SendService) {
     this.reportsForm = new FormGroup({
       period: new FormControl(null, Validators.required)
     })
-    // this.reportSection = this.sendService.getToDatabase('income').subscribe((res) => {
-    //   return res;
-    // });
-    // this.sendService.filterBy('income')
-    // console.log( this.reportSection)
     this.sendService.getSectionDate('income').subscribe((res) => {
       this.resIncomeAll = res;
-       console.log(this.resIncomeAll)
     })
     this.sendService.getSectionDate('salaries').subscribe((res) => {
       this.resSalariesAll = res
-       console.log(this.resSalariesAll)
     })
     this.sendService.getSectionDate('expenses').subscribe((res) => {
       this.resExpensesAll = res
-       console.log(this.resExpensesAll )
     })
-
-
-    this.sendService.filterSec('income').subscribe(res => console.log(res))
   }
 
-  ngOnInit() {
-  }
   onClickFilter() {
-    const resultFilter = this.resIncomeAll.filter((item: any): any => item.period === '2019-01');
-    this.resIncomeAll = resultFilter;
+    const period = this.reportsForm.controls.period.value;
+    const resultFilterIncome = this.resIncomeAll.filter((item: any): any => item.period === period);
+    if (resultFilterIncome.length) {
+      this.filterResultIncome = resultFilterIncome;
+    }
+    else {
+      this.filterResultIncome = [];
+      console.log('aaa')
+    }
+
+    const resultFilterExpenses = this.resExpensesAll.filter((item: any): any => item.period === period);
+    if (resultFilterExpenses.length) {
+      this.filterResultExpenses = resultFilterExpenses;
+    }
+    else {
+      this.filterResultExpenses = [];
+      console.log('empty')
+    }
+
+    const resultFilterSalaries = this.resSalariesAll.filter((item: any): any => item.period === period);
+    if (resultFilterSalaries.length) {
+      this.filterResultSalaries = resultFilterSalaries;
+    }
+    else {
+      this.filterResultSalaries = [];
+      console.log('aaa')
+    }
   }
 }

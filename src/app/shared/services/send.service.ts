@@ -10,20 +10,14 @@ export class SendService {
   public items: Observable<any[]>;
   constructor(private af: AngularFireDatabase) {
     this.size$ = new BehaviorSubject(null);
-    
-  
-   
   }
 
   public getSectionDate(section: string) {
-  
-     return this.af.list(`sections/${section}`).snapshotChanges().pipe(
-        map(changes =>
-          changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
-        )
+    return this.af.list(`sections/${section}`).snapshotChanges().pipe(
+      map(changes =>
+        changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
       )
-    
-    
+    )
   }
 
   public filterSec(section: string) {
@@ -35,20 +29,5 @@ export class SendService {
   public SendToDatabase(section: string, data) {
     return this.af.list(`sections/${section}`).push(data);
   }
-  // public getToDatabase(section: string) {
-  //   return this.items$ = this.size$.pipe(
-  //     switchMap(size =>
-  //       this.af.list(`sections/${section}`, ref =>
-  //         size ? ref.orderByChild('size').equalTo(size) : ref
-  //       ).snapshotChanges().pipe(
-  //         map(changes =>
-  //           changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
-  //         )
-  //       )
-  //     )
-  //   );
-  // }
-  // public filterBy(period: string | null) {
-  //   this.size$.next(period);
-  // }
+
 }

@@ -1,27 +1,18 @@
-<<<<<<< HEAD
 <div class="container">
-  <form 
-  class="repo-form"
-  [formGroup]="reportsForm">
+  <form class="repo-form" [formGroup]="reportsForm">
     <div class="form-row">
       <div class="col-md-12 col-lg-6">
         <div class="form-group">
           <label for="period">Select period</label>
-          <input 
-            formControlName="period" 
-            class="form-control" 
-            id="period" 
-            type="month">
+          <input formControlName="period" class="form-control" id="period" type="month">
         </div>
       </div> <!-- col-->
     </div><!-- form-row-->
   </form>
 </div>
-=======
-
 
 <table id="table1">
-   <tr>
+  <tr>
     <th>Date</th>
     <th>Name</th>
     <th>Project</th>
@@ -33,8 +24,8 @@
     <th>Cashing</th>
     <th>Taxes</th>
     <th>TOTAL Income UAH</th>
-   </tr>
-   <tr *ngFor="let item of resIncomeAll">
+  </tr>
+  <tr *ngFor="let item of filterResultIncome">
     <td>{{item.data.period}}</td>
     <td>{{item.data.name}}</td>
     <td>{{item.data.nameProject}}</td>
@@ -55,8 +46,7 @@
       <span *ngIf="item.data.taxesSelect !== 'custom'">{{item.data.taxesSelect}}<span>%</span></span>
     </td>
     <td>{{item.data.totalUAH}}<span>грн.</span></td>
-   </tr>
-  </table>
+  </tr>
+</table>
 
-<button (click)="onClickFilter()">filter</button>
->>>>>>> 4be6ffea5ac6876a06e7e878531f0242caff9201
+<button (click)="onClickFilter()">Click</button>
