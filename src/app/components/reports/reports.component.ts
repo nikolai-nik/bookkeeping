@@ -69,9 +69,10 @@ export class ReportsComponent {
     for (const key of this.filterResultExpenses) {
       this.totalOfficeExpenses = this.totalOfficeExpenses + key.data.ammount;
     }
-  
+
     this.profit = (this.totalIncome - this.totalCompanyExpenses).toFixed(2);
     this.profitEach = Number(this.profit) / 2;
+
   }
 
   public onClickFilter(period) {
@@ -87,7 +88,7 @@ export class ReportsComponent {
     const resultFilterExpenses = this.resExpensesAll.filter((item: any): any => item.period === period);
     if (resultFilterExpenses.length) {
       this.filterResultExpenses = resultFilterExpenses;
-      console.log('filterResultExpenses=>',this.filterResultExpenses);
+      console.log('filterResultExpenses=>', this.filterResultExpenses);
 
     }
     else {
