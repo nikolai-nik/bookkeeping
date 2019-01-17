@@ -31,7 +31,23 @@
     <td>{{item.data.name}}</td>
     <td>{{item.data.item}}</td>
     <td>{{item.data.ammount}}<span>грн.</span></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>Всего</td>
     <td>{{totalOfficeExpenses}}</td>
+  
+  </tr>
+  <tr *ngFor="let item of expensesFilter">
+    <td></td>
+    <td></td>
+    <td>{{item.name}}</td>
+    <td>Всего</td>
+    <td>{{item.ammount}}</td>
+  
   </tr>
 </table>
 </section>

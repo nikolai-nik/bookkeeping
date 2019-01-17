@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { SendService } from 'src/app/shared/services/send.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { forEach } from '@angular/router/src/utils/collection';
+import { jsonpCallbackContext } from '@angular/common/http/src/module';
+import { JsonpCallbackContext } from '@angular/common/http/src/jsonp';
+import { prefillHostVars } from '@angular/core/src/render3/instructions';
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
@@ -25,6 +29,8 @@ export class ReportsComponent {
   public profit: string;
   public profitEach: number;
 
+  public finish: any;
+  public expensesFilter: Array<any>
   constructor(private sendService: SendService) {
     this.totalIncome = 0;
     this.totalCompanyExpenses = 0;
@@ -43,7 +49,7 @@ export class ReportsComponent {
     this.filterResultIncome = null;
     this.filterResultExpenses = null;
     this.filterResultSalaries = null;
-
+    this.expensesFilter = [];
     this.sendService.getSectionData('income').subscribe((res) => {
       this.resIncomeAll = res;
     })
@@ -64,12 +70,40 @@ export class ReportsComponent {
     for (const key of this.filterResultSalaries) {
       this.totalCompanyExpenses = this.totalCompanyExpenses + key.data.totalUAH;
     }
-
-
-    for (const key of this.filterResultExpenses) {
+     for (const key of this.filterResultExpenses) {
       this.totalOfficeExpenses = this.totalOfficeExpenses + key.data.ammount;
+
     }
-  
+    // const uniqueSerials = Array.from(new Set(this.filterResultExpenses.map(item => item.data.name)));
+    const filter = this.filterResultExpenses.reduce(function (result, item) {
+      result[item.data.name] = (result[item.data.name] || []).concat(item.data.ammount);
+      return result;
+    }, {});
+   
+    for (let key in filter) {
+     
+      const itemObject = {
+        name : key,
+        ammount: filter[key].reduce((d,c) => d +c)
+      }
+      this.expensesFilter.push(itemObject)
+    }
+    for(let item of this.expensesFilter) {
+      const halfSum =  this.totalOfficeExpenses / this.expensesFilter.length;
+      if(halfSum > item.ammount) {
+       const resSum = halfSum - item.ammount;
+       console.log(resSum)
+       item.Res = '-' + resSum;
+       console.log( item)
+      } else {
+        const resSum = item.ammount - halfSum;
+        item.Res = '+' + resSum;
+      }
+      console.log(halfSum)
+      console.log(item)
+    }
+    
+
     this.profit = (this.totalIncome - this.totalCompanyExpenses).toFixed(2);
     this.profitEach = Number(this.profit) / 2;
   }
@@ -87,7 +121,7 @@ export class ReportsComponent {
     const resultFilterExpenses = this.resExpensesAll.filter((item: any): any => item.period === period);
     if (resultFilterExpenses.length) {
       this.filterResultExpenses = resultFilterExpenses;
-      console.log('filterResultExpenses=>',this.filterResultExpenses);
+      console.log('filterResultExpenses=>', this.filterResultExpenses);
 
     }
     else {
