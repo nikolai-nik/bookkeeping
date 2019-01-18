@@ -168,8 +168,6 @@ export class ReportsComponent {
     const resultFilterExpenses = this.resExpensesAll.filter((item: any): any => item.period === period);
     if (resultFilterExpenses.length) {
       this.filterResultExpenses = resultFilterExpenses;
-    
-
     }
     else {
       this.filterResultExpenses = null;

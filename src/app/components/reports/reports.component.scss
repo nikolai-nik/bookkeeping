@@ -35,10 +35,15 @@ td,th {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+  flex-direction: column;
 }
 
 @media only screen and (max-width: 1060px) {
  .section {
   overflow-x: scroll;
   }
+}
+
+.my-row {
+  margin-left: 3rem;
 }
