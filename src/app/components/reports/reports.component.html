@@ -34,22 +34,31 @@
     <td></td>
   </tr>
   <tr>
-    <td></td>
+    <td>{{reportsForm.controls.period.value}}</td>
     <td></td>
     <td></td>
     <td>Всего</td>
     <td>{{totalOfficeExpenses}}</td>
-  
-  </tr>
-  <tr *ngFor="let item of expensesFilter">
     <td></td>
+  </tr>
+  <tr 
+    *ngFor="let item of expensesFilter"
+    [className]="confirmBolean ? 'active-confirm' : 'inactive-confirm'">
+    <td>{{item.period}}</td>
     <td></td>
     <td>{{item.name}}</td>
     <td>Всего</td>
     <td>{{item.ammount}}</td>
-  
+    <td>{{item.halfSum}}</td>
   </tr>
-</table>
+  </table>
+  <button 
+    [disabled]="confirmBolean"
+    (click)="onConfirmPayment()"
+    type="submit" 
+    class="btn btn-primary sbm-btn">
+    Debt repaid
+  </button>
 </section>
 <div *ngIf="!filterResultExpenses && reportsForm.get('period').dirty"
   class="alert alert-primary" 
@@ -60,36 +69,36 @@
   *ngIf="filterResultIncome"
   class="section">
   <h2>Income</h2>
-<table 
-  class="table-custom">
-  <tr>
-    <th>Date</th>
-    <th>Name</th>
-    <th>Project</th>
-    <th>Income USD</th>
-    <th>Upwork/bank fees</th>
-    <th> Upwork Service fee</th>
-    <th>Total income USD</th>
-    <th>Income UAH</th>
-    <th>Cashing</th>
-    <th>Taxes</th>
-    <th>TOTAL Income UAH</th>
-   </tr>
+  <table 
+    class="table-custom">
+    <tr>
+      <th>Date</th>
+      <th>Name</th>
+      <th>Project</th>
+      <th>Income USD</th>
+      <th>Upwork/bank fees</th>
+      <th> Upwork Service fee</th>
+      <th>Total income USD</th>
+      <th>Income UAH</th>
+      <th>Cashing</th>
+      <th>Taxes</th>
+      <th>TOTAL Income UAH</th>
+    </tr>
 
-  <tr *ngFor="let item of filterResultIncome">
-    <td>{{item.period}}</td>
-    <td>{{item.data.name}}</td>
-    <td>{{item.data.nameProject}}</td>
-    <td>{{item.data.incomeUSD}}<span>$</span></td>
-    <td>{{item.data.bankFees}}<span>$</span></td>
-    <td><span>{{item.data.paymentUpwork}}<span>$</span></span></td>
-    <td>{{item.data.totalUSD}}<span>$</span></td>
-    <td>{{item.data.resultUAH}}<span>грн.</span></td>
-    <td><span>{{item.data.cashing}}<span>грн.</span></span></td>
-    <td><span>{{item.data.taxes}}<span>грн.</span></span></td>
-    <td>{{item.data.totalUAH}}<span>грн.</span></td>
-  </tr>
-</table>
+    <tr *ngFor="let item of filterResultIncome">
+      <td>{{item.period}}</td>
+      <td>{{item.data.name}}</td>
+      <td>{{item.data.nameProject}}</td>
+      <td>{{item.data.incomeUSD}}<span>$</span></td>
+      <td>{{item.data.bankFees}}<span>$</span></td>
+      <td><span>{{item.data.paymentUpwork}}<span>$</span></span></td>
+      <td>{{item.data.totalUSD}}<span>$</span></td>
+      <td>{{item.data.resultUAH}}<span>грн.</span></td>
+      <td><span>{{item.data.cashing}}<span>грн.</span></span></td>
+      <td><span>{{item.data.taxes}}<span>грн.</span></span></td>
+      <td>{{item.data.totalUAH}}<span>грн.</span></td>
+    </tr>
+  </table>
 </section>
 <div *ngIf="!filterResultIncome && reportsForm.get('period').dirty"
   class="alert alert-primary" 
@@ -132,7 +141,7 @@
 </div>
 
 <section 
-  *ngIf="filterResultSalaries"
+  *ngIf="filterResultSalaries || filterResultIncome"
   class="section">
   <h2>Profit</h2>
   <table 

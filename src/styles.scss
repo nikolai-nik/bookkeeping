@@ -373,3 +373,31 @@ label {
 // .cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
 //     opacity:0.1;
 // }
+//Report page table
+
+.repo-form {
+    margin-top: 2rem;
+}
+
+.my-input {
+    width: 100%;
+}
+
+table, td, th {
+  border: 1px solid #ccc;
+}
+
+.table-custom {
+  border-collapse: collapse;
+  border-color: blue;
+}
+
+.section {
+  margin-bottom: 2rem;
+}
+.active-confirm {
+  background: $primary;
+}
+.inactive-confirm {
+  background: $danger;
+}
