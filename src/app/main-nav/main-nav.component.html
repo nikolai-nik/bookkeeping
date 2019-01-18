@@ -30,46 +30,68 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
-      <button
-        (click)="drawer.toggle()"
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        class="menu-btn">
-         <i class="fas fa-bars"></i>
-      </button>
+      <div class="nav-container ">
+      <div class="row nav-row">
+        <div class="col-3">
+          <div class="wrapper-primary">
+            <button
+            (click)="drawer.toggle()"
+            type="button"
+            aria-label="Toggle sidenav"
+            mat-icon-button
+            class="menu-btn">
+            <i class="fas fa-bars"></i>
+          </button>
+          </div> 
+
+          
+        </div>
+        <div class="col-6">
+          <div class="wrapper-primary justify-content-center">
+            <img class="nav-logo" src="../../assets/logo-well.png">
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="wrapper-primary justify-content-end">
+            <mat-menu #appMenu="matMenu">
+            <div class="dropdovn-main-menu">
+              <ul class="nav flex-column">
+                <li class="nav-item">
+                  <a class="nav-link" (click)="onSingOuth()">
+                    <i class="fas fa-sign-out-alt"></i>Log out
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" (click)="BindingGoogle()">
+                    <i class="fab fa-google-plus-g"></i>
+                    Вinding
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" (click)="bindingFacebook()">
+                    <i class="fab fa-facebook"></i>
+                    Вinding
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </mat-menu>
+          <ng-container *ngIf="authService.userData as user">
+            <img 
+            [matMenuTriggerFor]="appMenu"
+              class="user-avatar" 
+              src="{{(user.photoURL) ? user.photoURL : '/assets/dummy-user.png'}}"
+              alt="{{user.displayName}}">
+          </ng-container>
+          </div>
+          
+        </div>  
+      </div>
+    </div>
      
       
-      <mat-menu #appMenu="matMenu">
-        <div class="dropdovn-main-menu">
-          <ul class="nav flex-column">
-            <li class="nav-item">
-              <a class="nav-link" (click)="onSingOuth()">
-                <i class="fas fa-sign-out-alt"></i>Log out
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" (click)="BindingGoogle()">
-                <i class="fab fa-google-plus-g"></i>
-                Вinding
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" (click)="bindingFacebook()">
-                <i class="fab fa-facebook"></i>
-                Вinding
-              </a>
-            </li>
-          </ul>
-        </div>
-      </mat-menu>
-      <ng-container *ngIf="authService.userData as user">
-         <img 
-         [matMenuTriggerFor]="appMenu"
-          class="user-avatar" 
-          src="{{(user.photoURL) ? user.photoURL : '/assets/dummy-user.png'}}"
-          alt="{{user.displayName}}">
-      </ng-container>
+      
+      
       
 
     </mat-toolbar>
