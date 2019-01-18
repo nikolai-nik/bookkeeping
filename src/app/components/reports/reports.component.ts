@@ -24,12 +24,14 @@ export class ReportsComponent {
   public totalOfficeExpenses: number;
   public profit: string;
   public profitEach: number;
+  public expensesFilter: Array<any>
 
   constructor(private sendService: SendService) {
     this.totalIncome = 0;
     this.totalCompanyExpenses = 0;
     this.totalOfficeExpenses = 0;
     this.profit = '0';
+
     this.reportsForm = new FormGroup({
       period: new FormControl(null, Validators.required)
     })
@@ -73,6 +75,34 @@ export class ReportsComponent {
     this.profit = (this.totalIncome - this.totalCompanyExpenses).toFixed(2);
     this.profitEach = Number(this.profit) / 2;
 
+    const filter = this.filterResultExpenses.reduce(function (result, item) {
+      result[item.data.name] = (result[item.data.name] || []).concat(item.data.ammount);
+      return result;
+    }, {});
+   
+    for (let key in filter) {
+     
+      const itemObject = {
+        name : key,
+        ammount: filter[key].reduce((d,c) => d +c)
+      }
+      this.expensesFilter.push(itemObject)
+    }
+    for(let item of this.expensesFilter) {
+      const halfSum =  this.totalOfficeExpenses / this.expensesFilter.length;
+      if(halfSum > item.ammount) {
+       const resSum = halfSum - item.ammount;
+       console.log(resSum)
+       item.Res = '-' + resSum;
+       console.log( item)
+      } else {
+        const resSum = item.ammount - halfSum;
+        item.Res = '+' + resSum;
+      }
+      console.log(halfSum)
+      console.log(item)
+    }
+  
   }
 
   public onClickFilter(period) {
