@@ -24,6 +24,7 @@ export class ExpensesComponent implements OnInit {
     private dialog: MatDialog
   ) {
     this.date = new Date();
+    this.uid = null;
     this.validationMessage = validation_messages;
     this.fullDate =
       `${this.date.getDate()}/${this.date.getMonth() + 1}/${this.date.getFullYear()}`;
